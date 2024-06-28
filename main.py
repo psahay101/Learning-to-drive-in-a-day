@@ -27,10 +27,6 @@ import math
 from env import CarEnv
 from ddpg_agent import Agent
 
-%matplotlib inline
-
-from ddpg_agent import Agent
-
 random_seed = random.randint(1, 25)
 plt.ion()
 
