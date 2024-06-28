@@ -1,4 +1,4 @@
-!pip -q install ./python
+#!/usr/bin/env python3
 
 import glob
 import os
