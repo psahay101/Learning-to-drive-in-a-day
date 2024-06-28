@@ -28,7 +28,7 @@ class Actor(nn.Module):
         self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=2)
         self.conv4 = nn.Conv2d(64, 128, kernel_size=3, stride=2)
 
-        self.fc1 = nn.Linear(state_size + 128 * 6 * 6, fc1_units)  # Adjust input size based on output of conv layers
+        self.fc1 = nn.Linear(state_size + 128 * 12 * 12, fc1_units)  # Adjust input size based on output of conv layers
         self.fc2 = nn.Linear(fc1_units, fc2_units)
         self.fc3 = nn.Linear(fc2_units, action_size)
         self.reset_parameters()
@@ -48,7 +48,7 @@ class Actor(nn.Module):
         image = F.relu(self.conv2(image))
         image = F.relu(self.conv3(image))
         image = F.relu(self.conv4(image))
-        image = image.view(-1, 128 * 6 * 6)  # Flatten the output for the FC layers
+        image = image.view(-1, 128 * 12 * 12)  # Flatten the output for the FC layers
 
         state = torch.cat((image, state), dim=1)  # Concatenate flattened image and state
 
@@ -76,7 +76,7 @@ class Critic(nn.Module):
         self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=2)
         self.conv4 = nn.Conv2d(64, 128, kernel_size=3, stride=2)
 
-        self.fcs1 = nn.Linear(state_size + 128 * 6 * 6, fcs1_units)
+        self.fc1 = nn.Linear(state_size + 128 * 12 * 12, fc1_units)  # Adjust input size based on output of conv layers
         self.fc2 = nn.Linear(fcs1_units + action_size, fc2_units)
         self.fc3 = nn.Linear(fc2_units, 1)
         self.reset_parameters()
@@ -96,7 +96,7 @@ class Critic(nn.Module):
         image = F.relu(self.conv2(image))
         image = F.relu(self.conv3(image))
         image = F.relu(self.conv4(image))
-        image = image.view(-1, 128 * 6 * 6)  # Flatten the output for the FC layers
+        image = image.view(-1, 128 * 12 * 12)  # Flatten the output for the FC layers
 
         state = torch.cat((image, state), dim=1)  # Concatenate flattened image and state
 

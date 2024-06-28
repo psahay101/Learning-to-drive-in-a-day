@@ -60,6 +60,16 @@ class CarEnv:
     def process_img(self, image):
         i = np.array(image.raw_data)
         i2 = i.reshape((self.IM_HEIGHT, self.IM_WIDTH, 4))
+        i3 = i2[:, :, :3]  # Extract only the RGB channels
+        gray_image = cv2.cvtColor(i3, cv2.COLOR_RGB2GRAY)  # Convert RGB to Grayscale
+        if self.SHOW_CAM:
+            cv2.imshow("CarlaCam", gray_image)
+            cv2.waitKey(1)
+        self.front_camera = gray_image  # Store the grayscale image
+
+    def process_img_color(self, image):
+        i = np.array(image.raw_data)
+        i2 = i.reshape((self.IM_HEIGHT, self.IM_WIDTH, 4))
         i3 = i2[:, :, :3]
         if self.SHOW_CAM:
             cv2.imshow("CarlaCam", i3)
